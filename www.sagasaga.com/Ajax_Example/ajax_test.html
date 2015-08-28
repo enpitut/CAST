@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <script src="js/jquery-2.1.4.min.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function (){
+      $("#btn-ajax").click(function(){
+        event.preventDefault();
+
+        //AJAX POST
+        ajaxPost();
+
+        //AJAX GET
+        // ajaxGet();
+      });
+    });
+
+    function ajaxGet(){
+      $.ajax({
+         url: 'ajax_jsonreturn.php',
+         type: 'GET',
+         error: function() {
+            alert('failure');
+         },
+         success: function(data) {
+            $('#res').html(data);
+
+            //parse to JSON object
+            var jsonObj = $.parseJSON(data);
+
+            //get JSON object value by key
+            var json_result = "";
+            json_result = json_result + "a->" + jsonObj.a + "<br/>";
+            json_result = json_result + "b->" + jsonObj.b + "<br/>";
+            json_result = json_result + "c->" + jsonObj.c + "<br/>";
+            json_result = json_result + "d->" + jsonObj.d + "<br/>";
+            json_result = json_result + "e->" + jsonObj.e + "<br/>";
+            $('#json-res').html(json_result);
+         }
+      });
+    }
+
+    function ajaxPost(){
+      $.ajax({
+        url: 'ajax_jsonreturn.php',
+        type: "POST",
+        data: {Post_Data:"data posted"} , //data to be posted
+        error: function() {
+           alert('failure');
+        },
+        success: function(data) {
+          $('#res').html(data);
+        }
+      });
+    }
+  </script>
+</head>
+<body>
+<button id="btn-ajax">Do Ajax!</button>
+<div>
+  <br/>
+  <br/>
+  Response:
+  <p id="res"></p>
+  <br/>
+  <br/>
+  Get JSON Values:
+  <p id="json-res"></p>
+</div>
+</body>
+</html>
