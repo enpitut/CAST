@@ -1,0 +1,89 @@
+@charset "utf-8";
+/* CSS Document */
+{
+	margin:0;
+	padding:0;
+}
+body, ul, ol, li, dl, dt, dd, p, h1, h2, h3, h4, h5, h6, form, fieldset, table, td, img, div {
+	margin:0;
+	padding:0;
+	border:0;
+	font-family:"ヒラギノ角ゴ Pro W3","メイリオ","Hiragino Kaku Gothic Pro", "ＭＳ Ｐゴシック","MS PGothic", Arial,sans-serif,Meiryo, Osaka;  
+}
+h1, h2, h3, h4, h5, h6 {
+	font-size:1em;
+	font-weight:normal;
+}
+li {
+	list-style:none;
+}
+
+a {
+	color: #000;
+	text-decoration:none;
+}
+a:hover {
+	text-decoration:none;
+	color:#f60;
+}
+
+img, object{
+	border: 0;
+	max-width: 100%;
+	width:100%;/*适用老版IE*/
+	-ms-interpolation-mode: bicubic;/*防止图片失真*/
+}
+
+small {
+　　　　font-size: 0.875em;
+}
+
+.left{
+	float:left;
+}
+.right{
+	float:right;
+}
+.c {
+	clear:both;
+	font-size:0px;
+}
+/*------------------------main--------------------------*/
+.main{
+	width:100%;
+	text-align:center;
+}
+
+.top{
+	width:100%;
+	position:fixed;
+	left:0px;
+	top:0px;
+	height:20px;
+}
+.list{
+	margin-top:20px;
+}
+
+.forty{
+	position:relative;
+	left:40%;
+}
+/*-----------------------login--------------------------*/
+#loginLogo{
+	 magin:0 auto;
+}
+.high{
+	height:30px;
+}
+.font{
+	position:relative;
+	left:39%;
+}
+/*----------------------register------------------------*/
+
+/*-------------------------main-------------------------*/
+.goods{
+	max-width:10%;
+	_width:expression(this.width>10%?"10%":this.width);
+}
