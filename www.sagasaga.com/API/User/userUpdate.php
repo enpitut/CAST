@@ -21,9 +21,6 @@ if(strlen($userID) > 0){
 	if(isset($_POST['email'])){
 		$array['email'] = $_POST['email'];
 	}
-	if(isset($_POST['username'])){
-		$array['username'] = $_POST['username'];
-	}
 	if(isset($_POST['sex'])){
 		$array['sex'] = $_POST['sex'];
 	}

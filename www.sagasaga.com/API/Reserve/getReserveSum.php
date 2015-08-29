@@ -11,8 +11,10 @@ if(strlen($goodsID) > 0){
   $sql = "SELECT COUNT(*) AS 'sum' FROM reserve WHERE goodsID='" . $goodsID . "'";
 	$result = $t_reserve->query($sql);
 
-  echo json_encode($result);
-  exit;
+	if(count($result) > 0){
+		echo '{"status":"success", "sum":"' . $result[0]['sum'] . '"}';
+		exit;
+	}
 }
 
 echo '{"status":"error"}';

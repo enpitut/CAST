@@ -3,11 +3,6 @@ include('../DBBaseTable.php');
 
 $keyword = '';
 $catalog = '';
-$userID = '';
-
-if(isset($_POST['userID'])){
-	$userID = $_POST['userID'];
-}
 
 if(isset($_POST['keyword'])){
 	$keyword = $_POST['keyword'];
@@ -27,12 +22,6 @@ if(strlen($keyword) > 0){
 elseif (strlen($catalog) > 0) {
 	$t = new DBBaseTable("goods");
   $result = $t->query_by_field("catalog",$catalog);
-  echo json_encode($result);
-	exit;
-}
-elseif (strlen($userID) > 0) {
-	$t = new DBBaseTable("goods");
-  $result = $t->query_by_field("userID",$userID);
   echo json_encode($result);
 	exit;
 }

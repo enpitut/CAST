@@ -6,20 +6,17 @@
 include('../DBBaseTable.php');
 
 $array = array();
-if(isset($_POST['email'])){
-	$array['email'] = $_POST['email'];
-}
 if(isset($_POST['username'])){
 	$array['username'] = $_POST['username'];
 }
-if(isset($_POST['sex'])){
-	$array['sex'] = $_POST['sex'];
-}
-if(isset($_POST['age'])){
-	$array['age'] = $_POST['age'];
-}
 if(isset($_POST['password'])){
 	$array['password'] = md5($_POST['password']);
+}
+if(isset($_POST['email'])){
+	$array['email'] = $_POST['email'];
+}
+if(isset($_POST['sex'])){
+	$array['sex'] = $_POST['sex'];
 }
 if(isset($_POST['address'])){
 	$array['address'] = $_POST['address'];
