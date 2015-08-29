@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8"/>
+		<title>Mini Ajax File Upload Form</title>
+
+		<style>
+		#upload a{
+		    background-color:#007a96;
+		    padding:12px 26px;
+		    color:#fff;
+		    font-size:14px;
+		    border-radius:2px;
+		    cursor:pointer;
+		    display:inline-block;
+		    margin-top:12px;
+		    line-height:1;
+		}
+
+		#upload a:hover{
+		    background-color:#0986a3;
+		}
+
+		#display-box{
+			width: 200px;
+			height: 100px;
+			margin:0;
+			padding:10px;
+			background-color: #ccc;
+			overflow-y: hidden;
+			overflow-x: auto;
+			border-radius: 5px;
+		}
+
+		#display-box ul{
+			width: 300px;
+			height: 100%;
+			list-style: none;
+			margin:0;
+			padding:0;
+		}
+
+		#display-box ul li{
+			float:left;
+			position: relative;
+			margin: 0 5px;
+		}
+
+		#display-box ul li span{
+			cursor:pointer;
+			position: absolute;
+			top: 0;
+			right: 0;
+			color: white;
+		}
+
+		#display-box ul li img{
+			height: 100px;
+		}
+		</style>
+	</head>
+	<body>
+
+		<!-- PLACE TO DISPLAY UPLOADED PHOTOS -->
+		<div id="display-box">
+			<ul>
+			</ul>
+		</div>
+
+		<!-- FORM TO UPLOAD PHOTO -->
+		<form id="upload" method="post" action="api/upload.php" enctype="multipart/form-data">
+			<a>Browse</a>
+			<input style="display:none" type="file" name="upl" multiple />
+		</form>
+
+		<!-- JavaScript Includes -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+		<!-- jQuery File Upload Dependencies -->
+		<script src="js/jquery.ui.widget.js"></script>
+		<script src="js/jquery.fileupload.js"></script>
+
+		<!-- Our main JS file -->
+		<!-- <script src="js/upload_script.js"></script> -->
+		<script src="js/ajax-calls.js"></script>
+		<script type="text/javascript">
+			$('#upload a').click(function(){
+					$(this).parent().find('input').click();
+			});
+
+			/* pass form id and handle callbacks which return photo path */
+			init_upload('upload', function(path){
+				alert(path);
+				var tpl = '<li><img alt="" src="' + path + '" /><span>X</span></li>';
+				$('#display-box ul').append(tpl);
+			});
+		</script>
+	</body>
+</html>

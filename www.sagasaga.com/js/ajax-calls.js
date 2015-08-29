@@ -11,7 +11,7 @@ function register(jsonData, callback){
           //  alert('failure');
         },
         success: function(data) {
-          callback(data);
+          if (callback) callback(data);
         }
       });
 }
@@ -25,7 +25,7 @@ function login(jsonData, callback){
       //  alert('failure');
     },
     success: function(data) {
-      callback(data);
+      if (callback) callback(data);
     }
   });
 }
@@ -39,7 +39,7 @@ function getUserInfo(jsonData, callback){
       //  alert('failure');
     },
     success: function(data) {
-      callback(data);
+      if (callback) callback(data);
     }
   });
 }
@@ -53,7 +53,7 @@ function updateUserInfo(jsonData, callback){
         //  alert('failure');
     },
     success: function(data) {
-      callback(data);
+      if (callback) callback(data);
     }
   });
 }
@@ -67,7 +67,7 @@ function newGoods(jsonData, callback){
           //  alert('failure');
     },
     success: function(data) {
-      callback(data);
+      if (callback) callback(data);
     }
   });
 }
@@ -81,7 +81,7 @@ function getGoodsInfo(jsonData, callback){
             //  alert('failure');
     },
     success: function(data) {
-        callback(data);
+        if (callback) callback(data);
     }
   });
 }
@@ -95,7 +95,7 @@ function getGoodsList(jsonData, callback){
               //  alert('failure');
             },
     success: function(data) {
-              callback(data);
+              if (callback) callback(data);
             }
     });
   }
@@ -108,7 +108,7 @@ function getMyGoodsListCreated(callback){
                 //  alert('failure');
     },
     success: function(data) {
-      callback(data);
+      if (callback) callback(data);
     }
   });
 }
@@ -121,7 +121,7 @@ function getMyGoodsListReserved(callback){
                   //  alert('failure');
     },
     success: function(data) {
-      callback(data);
+      if (callback) callback(data);
     }
   });
 }
@@ -135,7 +135,7 @@ function newReserve(jsonData, callback){
                   //  alert('failure');
     },
     success: function(data) {
-      callback(data);
+      if (callback) callback(data);
     }
   });
 }
@@ -149,7 +149,7 @@ function getReserveList(jsonData, callback){
                   //  alert('failure');
     },
     success: function(data) {
-      callback(data);
+      if (callback) callback(data);
     }
   });
 }
@@ -163,7 +163,30 @@ function getReserveSum(jsonData, callback){
                   //  alert('failure');
     },
     success: function(data) {
-      callback(data);
+      if (callback) callback(data);
     }
   });
+}
+
+function init_upload(formID, callback){
+  var jqID = '#' + formID;
+
+  $(jqID).fileupload({
+      add: function (e, data) {
+          var jqXHR = data.submit();
+      },
+      progress: function(e, data){
+          var progress = parseInt(data.loaded / data.total * 100, 10);
+
+          if(progress == 100){
+            path = "upload/" + data.files[0].name;
+            if (callback) callback(path);
+          }
+      },
+      fail:function(e, data){
+          // Something has gone wrong!
+      }
+  });
+
+  return;
 }
