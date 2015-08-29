@@ -8,9 +8,13 @@ define("DBNAME", "sagasaga");
 class DBBaseTable{
  var $table_name;
 
-
 public function __construct($table) {
 	$this->table_name = $table;
+}
+
+public function query_by_nothing(){
+	$sql = "SELECT * FROM " . $this->table_name;
+	return $this->query($sql);
 }
 
 public function query_by_id($id){
@@ -23,24 +27,29 @@ public function query_by_field($field, $value){
 	return $this->query($sql);
 }
 
+public function query_by_where($where){
+  $sql = "SELECT * FROM " . $this->table_name . " WHERE " . $where;
+	return $this->query($sql);
+}
+
 public function query($sql){
 	$result = $this->query_common($sql);
 	return $this->result_to_Array($result);
 }
 
-public function query_common($sql){
+private function query_common($sql){
 	$conn = new mysqli(SERVER_NAME, USERNAME, PASSWORD, DBNAME);
 
 	if ($conn->connect_error) {
 	die("Connection failed: " . $conn->connect_error);
 	}
 	else{
-		echo 'database connected';
+		// echo 'database connected';
 	}
 
 	$result = $conn->query($sql);
 	$conn->close();
-
+  // echo $sql;
 	return $result;
 }
 
@@ -62,45 +71,13 @@ public function update($sql){
 	return $this->action_common($sql);
 }
 
-/*start 新規不用品する時  新規不用品のuidを返し*/
-function insert_goods($arr) {
-	$sql = "INSERT INTO " . $this->table_name . " ";
-	$f_name = "uid,";
-	$uid = $this->GUID ();
-	$f_value = "'" . $uid . "',";
-
-	foreach ( $arr as $key => $value ) {
-		$f_name = $f_name . $key . ",";
-		$f_value = $f_value . "'" . $value . "',";
-	}
-
-	$f_name = substr ( $f_name, 0, strlen ( $f_name ) - 1 );
-	$f_value = substr ( $f_value, 0, strlen ( $f_value ) - 1 );
-
-	$sql = $sql . "(" . $f_name . ") VALUES (" . $f_value . ")";
-
-	$res = $this->insert ( $sql );
-
-	if(	$res === true){
-		return $uid;
-	}else {
-		return $res;
-	}
-
-}
-
-
-public function query_by_nothing(){
-	$sql = "SELECT * FROM " . $this->table_name . "";
-	return $this->query($sql);
-}
-
 /*over  */
 
 function insert_with_array($arr) {
+  $guid = $this->GUID ();
 	$sql = "INSERT INTO " . $this->table_name . " ";
 	$f_name = "uid,";
-	$f_value = "'" . $this->GUID () . "',";
+	$f_value = "'" . $guid . "',";
 
 	foreach ( $arr as $key => $value ) {
 		$f_name = $f_name . $key . ",";
@@ -112,8 +89,11 @@ function insert_with_array($arr) {
 
 	$sql = $sql . "(" . $f_name . ") VALUES (" . $f_value . ")";
 
-	print_r($sql);
- 	return $this->insert ( $sql );
+  if($this->insert ($sql)){
+    return $guid;
+  }
+
+  return "";
 }
 
   public function insert($sql){
@@ -125,7 +105,7 @@ function insert_with_array($arr) {
 
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
-        echo 'failure';
+        // echo 'failure';
     }
     else{
 //     	echo 'database connected';

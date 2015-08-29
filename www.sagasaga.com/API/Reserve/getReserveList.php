@@ -1,11 +1,20 @@
 <?php
-//this a API for Reserve
-//created by great.chou
-//2015/8/28
+include('../DBBaseTable.php');
 
-$t = new DBBaseTable("photo");
-$photores = $t->query_by_field("goodsid",$goodsid);
+$goodsID = '';
+if(isset($_POST['goodsID'])){
+	$goodsID = $_POST['goodsID'];
+}
 
-print_r(array_values($photores));
+if(strlen($goodsID) > 0){
+  $t_reserve = new DBBaseTable("");
+  $sql = "SELECT reserve.*, user.username FROM reserve, user WHERE goodsID='" . $goodsID . "' AND reserve.userID = user.uid";
+	$result = $t_reserve->query($sql);
 
+  echo json_encode($result);
+  exit;
+}
+
+echo '{"status":"error"}';
+exit;
 ?>

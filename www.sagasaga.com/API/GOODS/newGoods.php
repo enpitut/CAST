@@ -5,55 +5,69 @@
 // 2015/8/28
 include ('../DBBaseTable.php');
 
-
 /*向GOODS表中插入数据  */
-$goodsuid = "";
-//session
+// $userID = "7356C2A59B944E7FB3EE5CFD5297843C";
+// $catalogID = "7356C2A59B944E7FB3EE5CFD5297843C";
+// $photos = '[{"path":"upload/111.jpg"},{"path":"upload/111.jpg"},{"path":"upload/111.jpg"}]';
+// $title = "new goods";
+// $description = "";
 
-$userid = "7356C2A59B944E7FB3EE5CFD5297843C";
-$catalogid = "7356C2A59B944E7FB3EE5CFD5297843C";
+// test post param
+// echo $_POST['title'];
 
+$userID = '';
+$catalog = '';
+$photos = '';
+$title = '';
+$description = '';
 
-$t = new DBBaseTable ( "goods" ); // comments is table name
-
-$array = array (
-		"description" => $_POST ["description"],
-		"catalogID" => $catalogid,
-		"userID" =>$userid
-);
-
-$goodsuid = $t->insert_goods ( $array );
-
-/*向PHOTO表中插入数据  */
-
-$t = new DBBaseTable ( "photo" ); // comments is table name
-
-if ($_FILES ["file"] ["size"] < 20000000) {
-	if ($_FILES ["file"] ["error"] > 0) {
-		echo "Return Code: " . $_FILES ["file"] ["error"] . "<br />";
-	} else {
-		echo "Upload: " . $_FILES ["file"] ["name"] . "<br />";
-		echo "Type: " . $_FILES ["file"] ["type"] . "<br />";
-		echo "Size: " . ($_FILES ["file"] ["size"] / 1024) . " Kb<br />";
-		echo "Temp file: " . $_FILES ["file"] ["tmp_name"] . "<br />";
-
-		if (file_exists ( "upload/" . $_FILES ["file"] ["name"] )) {
-			echo $_FILES ["file"] ["name"] . " already exists. ";
-		} else {
-			move_uploaded_file ( $_FILES ["file"] ["tmp_name"], "upload/" . $_FILES ["file"] ["name"] );
-			echo "Stored in: " . "upload/" . $_FILES ["file"] ["name"];
-		}
-	}
-} else {
-	echo "Invalid file";
+if(isset($_POST['title'])){
+	$title = $_POST['title'];
 }
 
-$array = array (
-		"goodsID" => $goodsuid,
-		"path" =>  "upload/" . $_FILES ["file"] ["name"]
-);
+if(isset($_POST['userID'])){
+	$userID = $_POST['userID'];
+}
 
-$t->insert_with_array($array);
+if(strlen($userID) == 0 && isset($_SESSION['CURRENT_USER_ID'])){
+  $userID = $_SESSION['CURRENT_USER_ID'];
+}
 
+if(isset($_POST['catalog'])){
+	$catalog = $_POST['catalog'];
+}
+
+if(isset($_POST['photos'])){
+	$photos = $_POST['photos'];
+}
+
+if(isset($_POST['description'])){
+	$description = $_POST['description'];
+}
+
+if(strlen($title) > 0 &&
+		strlen($catalog) > 0 &&
+		strlen($userID) > 0){
+
+			$t_goods = new DBBaseTable("goods");
+
+			$array = array (
+					"title" => $title,
+					"catalog" => $catalog,
+					"userID" => $userID,
+					"photos" => $photos,
+					"description" => $description
+			);
+
+			$goodsID = $t_goods->insert_with_array($array);
+
+			if(strlen($goodsID) > 0){
+				/* Or Redirect To Another Page */
+				echo '{"status":"success", "goodsID":"' . $goodsID . '"}';
+				exit;
+			}
+		}
+
+	echo '{"status":"error"}';
+	exit;
 ?>
-<!-- over -->

@@ -4,21 +4,23 @@
 //2015/8/27
 
 include('../DBBaseTable.php');
-$t = new DBBaseTable("User"); //comments is table names
 
-//----------test------------
-// Start the session
-// session_start();
-// $_SESSION["userid"] = "";
-// $result = getUserInfo($_SESSION["userid"]);
-// $_SESSION["username"] = $result[0];
+$userID = '';
+if(isset($_POST['userID'])){
+	$userID = $_POST['userID'];
+}
 
-$uid = "63FC03CB97A243E49B1A4AE0B879978A";
+if(strlen($userID) == 0 && isset($_SESSION['CURRENT_USER_ID'])){
+  $userID = $_SESSION['CURRENT_USER_ID'];
+}
 
-$result = $t->query_by_id($uid);
+if(strlen($userID) > 0){
+  $t = new DBBaseTable("user");
+  $result = $t->query_by_id($userID);
+  echo json_encode($result);
+  exit;
+}
 
-print_r(array_values($result));
-echo json_last_error($result, TRUE);
-
-//-------------------------
+echo '{"status":"error"}';
+exit;
 ?>

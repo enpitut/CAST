@@ -1,14 +1,7 @@
 <?php
 include('DBBaseTable.php');
 
-
-
-echo GUID();
-
-
 /* EXAMPLE */
-
-
 $t = new DBBaseTable("comments"); //comments is table name
 
 //SELECT

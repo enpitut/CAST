@@ -1,7 +1,9 @@
-<html>
-<body>
+<!-- <html>
+<head>
+</head>
 
-<form action="API/User/register.php" method="post">
+<body> -->
+<!-- <form action="API/User/register.php" method="post">
 
 Name: <input type="text" name="name"><br>
 E-mail: <input type="text" name="email"><br>
@@ -34,17 +36,17 @@ age: <input type="text" name="age"><br>
 password: <input type="text" name="passwword"><br>
 
 <input type="submit">
-</form>
+</form> -->
 
-new GOODS
-<form action="API/GOODS/newGoods.php" method="post"
+<!-- new GOODS
+<form action="api/upload.php" method="post"
 enctype="multipart/form-data">
 <label for="file">Filename:</label>
 <input type="text" name="description" id="description" />
-<input type="file" name="file" id="file" />
+<input type="file" name="upl" id="file" />
 <br />
 <input type="submit" name="submit" value="Submit" />
-</form>
+</form> -->
 
-</body>
-</html>
+<!-- </body>
+</html> -->
