@@ -9,6 +9,53 @@
 　<script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
 <![endif]-->
 <link rel="stylesheet" type="text/css" href="../css/top.css"/>
+<script type="text/javascript" src="../js/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="../js/ajax-calls.js"></script>
+<script type="text/javascript">
+
+  $(document).ready(function(){
+    $('#btn-signup').click(function(evt){
+      evt.preventDefault();
+      window.location.href = "register.html";
+    });
+
+    $('#btn-signin').click(function (evt) {
+      evt.preventDefault();
+
+      var msg = checkForm();
+      if(msg.length > 0){
+        alert(msg);
+      }
+      else{
+        var jsonData = {"username":$('#f-username').val(),
+                        "password":$('#f-password').val()};
+
+        login(jsonData, function(res){
+          var jsonObj = $.parseJSON(res);
+          if('success' == jsonObj.status){
+            window.location.href = "main.html";
+          }
+          else{
+              alert("something wrong");
+          }
+        });
+      }
+    });
+  });
+
+  function checkForm(){
+    var msg = '';
+
+    if($('#f-username').val() == ''){
+      msg = 'usernameを入力してください';
+    }
+    else if($('#f-password').val() == ''){
+      msg = 'passwordを入力してください';
+    }
+
+    return msg;
+  }
+</script>
 </head>
 
 <body>
@@ -20,22 +67,22 @@
 <div class="main">
   <div class="main-left">&nbsp;</div>
   <div class="main-middle">
-    <h1>Login</h1>
-    <div class="login"> 
-      <div class="login-left"><span>Username:</span></div>
-      <div class="login-right"><input type="text" class="login-text"/></div>    
-    </div>
-    <div class="login"> 
-      <div class="login-left"><span>Password:</span></div>
-      <div class="login-right"><input type="password" class="login-text"/></div>  
+    <h1>サインイン</h1>
+    <div class="login">
+      <div class="login-left"><span>ユーザーネーム:</span></div>
+      <div class="login-right"><input id="f-username" type="text" class="login-text"/></div>
     </div>
     <div class="login">
-      <input type="button" value="サインイン" class="login-button"/>
+      <div class="login-left"><span>パスワード:</span></div>
+      <div class="login-right"><input id="f-password" type="password" class="login-text"/></div>
+    </div>
+    <div class="login">
+      <input id="btn-signin" type="button" value="サインイン" class="login-button"/>
     </div>
     <div class="login top-gap">
-      <input type="button" value="今すぐ登録" class="login-button"/>
+      <input id="btn-signup" type="button" value="今すぐ登録" class="login-button"/>
     </div>
-    <div class="bottom">&nbsp;</div>
+    <div class="bottom-gap">&nbsp;</div>
   </div>
   <div class="main-right">&nbsp;</div>
 </div>

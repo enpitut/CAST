@@ -1,12 +1,7 @@
 <?php
-//this a API for Reserve
-//created by great.chou
-//2015/8/28
+session_start();
 
 include('../DBBaseTable.php');
-
-// $userid = "7356C2A59B944E7FB3EE5CFD5297843C";
-// $goodsid = "5A5C23BB387A4A69A145CBD6F30DF12B";
 
 $userID = '';
 $goodsID = '';
@@ -18,6 +13,11 @@ if(isset($_POST['userID'])){
 if(strlen($userID) == 0 && isset($_SESSION['CURRENT_USER_ID'])){
   $userID = $_SESSION['CURRENT_USER_ID'];
 }
+// else{
+// 	if not signed in, redirect to login.html
+// 	header("Location: ../../index/login.html"); /* Redirect browser */
+// 	exit();
+// }
 
 if(isset($_POST['goodsID'])){
 	$goodsID = $_POST['goodsID'];

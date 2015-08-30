@@ -13,6 +13,11 @@ if(isset($_POST['userID'])){
 if(strlen($userID) == 0 && isset($_SESSION['CURRENT_USER_ID'])){
   $userID = $_SESSION['CURRENT_USER_ID'];
 }
+// else{
+// 	if not signed in, redirect to login.html
+// 	header("Location: ../../index/login.html"); /* Redirect browser */
+// 	exit();
+// }
 
 if(strlen($userID) > 0){
 	$t_user = new DBBaseTable("user");

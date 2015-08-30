@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 include('../DBBaseTable.php');
 
 $goodsID = '';

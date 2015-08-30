@@ -3,7 +3,7 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Goodes Detail</title>
+<title>Goods Detail</title>
 <link rel="stylesheet" type="text/css" href="../css/common.css"/>
 <!--[if lt IE 9]>
 　<script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
@@ -12,6 +12,108 @@
 <link rel="stylesheet" type="text/css" href="../css/raxus.css"/>
 <script type="text/javascript" src="../js/jquery-1.11.0.min.js"></script>
 <script type="text/javascript" src="../js/raxus-slider.min.js"></script>
+<script type="text/javascript" src="../js/UrlParamter.js"></script>
+<script type="text/javascript" src="../js/ajax-calls.js"></script>
+<script type="text/javascript">
+  var goodsOwnerID = '';
+
+  $(document).ready(function(){
+    fetchUserInfo();
+    refreshReserveSum();
+
+    var jsonData = {"goodsID":getUrlParameter('goodsID')};
+
+    getGoodsInfo(jsonData, function(res){
+      var jsonArr = $.parseJSON(res);
+
+      if($.isArray(jsonArr) && jsonArr.length > 0){
+        var goodsJObj = jsonArr[0];
+
+        $('#f-title').text(goodsJObj.title);
+        $('#f-createdtime').text(goodsJObj.createdTime);
+        $('#f-category').text(goodsJObj.category);
+        $('#f-description').text(goodsJObj.description);
+        goodsOwnerID = goodsJObj.userID;
+
+        //get phohos
+        if(goodsJObj.photos != ''){
+          var photos = $.parseJSON(goodsJObj.photos);
+
+          if($.isArray(photos) && photos.length > 0){
+            for(var i = 0; i < photos.length; i++){
+              var photoHtml = '<li class="slide"> <img src="' + photos[i] + '" alt=""> </li>';
+              $('.slider-relative').append(photoHtml);
+            }
+          }
+        }
+      }
+      else{
+          alert("something wrong");
+      }
+    });
+  });
+
+  function doReserve(){
+    var jsonData = {"goodsID":getUrlParameter('goodsID')};
+
+    newReserve(jsonData, function(res){
+      refreshReserveSum();
+      sendMail();
+
+      alert('売り手にメールを送りましたよ！');
+    });
+  }
+
+  function sendMail(){
+    if(goodsOwnerID != ''){
+      var jsonData = {"userID":goodsOwnerID};
+
+      getUserInfo(jsonData, function(res){
+        var jsonArr = $.parseJSON(res);
+        if($.isArray(jsonArr) && jsonArr.length > 0){
+          var ownerJObj = jsonArr[0];
+
+          var mailData = {"recipients": ownerJObj.email};
+
+          $.ajax({
+            url: '../Mail/fansile.php',
+            type: "POST",
+            data: mailData,
+            error: function() {
+              //  alert('failure');
+            },
+            success: function(data) {
+              // alert(data);
+            }
+          });
+        }
+      });
+    }
+  }
+
+  function fetchUserInfo(){
+    getUserInfo('',function(res){
+      var jsonArr = $.parseJSON(res);
+
+      if($.isArray(jsonArr) && jsonArr.length > 0){
+        var userJObj = jsonArr[0];
+        $('#f-username').text(jsonArr[0].username);
+      }
+    });
+  }
+
+  function refreshReserveSum(){
+    var jsonData = {"goodsID":getUrlParameter('goodsID')};
+
+    getReserveSum(jsonData, function(res){
+      var sumJObj = $.parseJSON(res);
+      var msg = '予約 (' + sumJObj.sum + ')';
+      $('#btn-reserve').val(msg);
+    });
+  }
+
+</script>
+
 </head>
 
 <body>
@@ -25,53 +127,78 @@
   <div class="main">
   	<div class="main-left">&nbsp;</div>
     <div class="main-middle">
-      <h1>Title</h1>
+      <h1 id="f-title">Title</h1>
       <div id="mySlider" class="raxus-slider" data-autoplay="3000" data-arrows="show" data-fullscreen="show" data-dots="show" data-keypress="true" data-thumbnail="bottom">
       <ul class="slider-relative" id="relative">
-        <li class="slide fix-width"> <a href="http://google.com"><img src="../image/content/1.jpg" alt=""></a> <span class="text ani-left"> <strong>Breaking Bad</strong> <small>American crime drama television series created and produced by Vince Gilligan.</small> </span> </li>
-        <li class="slide"> <img src="../image/content/13.jpg" alt="" data-videourl="http://sc.chinaz.com/" /> <span class="text ani-top"> <strong>Video Slide</strong> <small>You can add video link from Youtube and Vimeo.</small> </span> </li>
-        <li class="slide"> <img src="../image/content/2.jpg" alt="" data-thumbnailurl="../image/content/10.jpg"> <span class="text ani-right"> <strong>Custom Thumbnail</strong> <small>Raxus Slider gets thumbnail urls automatically. But you can add your custom thumbnail url easily.</small> </span> </li>
-        <li class="slide"> <a href="http://dribbble.com/bqra"><img src="../image/content/14.jpg" alt=""></a> <span class="text ani-bottom"> <strong>Slide Link</strong> <small>Add link your slides.</small> </span> </li>
-        <li class="slide fix-height"> <img src="../image/content/4.jpg" alt="" data-videourl="http://sc.chinaz.com/" /> </li>
-        <li class="slide"> <img src="../image/content/5.jpg" alt=""> </li>
-        <li class="slide fix-width"> <img src="../image/content/6.jpg" alt="">
-          <div class="text"> <strong>Scarface</strong> </div>
-        </li>
-        <li class="slide fix-width"> <img src="../image/content/3.jpg" alt=""> </li>
-        <li class="slide"> <img alt="" data-thumbnailurl="../image/content/10.jpg">
-          <video width="650" height="330" controls>
-            <source src="../image/content/trailer.mp4" type="video/mp4">
-          </video>
-        </li>
-        <li class="slide"> <img src="../image/content/8.jpg" alt=""> </li>
-        <li class="slide"> <img src="../image/content/9.jpg" alt=""> </li>
-        <li class="slide"> <img src="../image/content/10.jpg" alt=""> </li>
-        <li class="slide"> <img src="../image/content/11.jpg" alt=""> <span class="text"> <strong>Star Wars</strong> <small>Star Wars is an American epic space opera franchise centered on a film series created by George Lucas. The film series, consisting of two trilogies, has spawned an extensive media franchise called the Expanded Universe including books, television series, computer and video games, and comic books.</small> </span> </li>
-        <li class="slide fix-width"> <img src="../image/content/15.jpg" alt=""> <span class="text"> <strong>HER</strong> </span> </li>
+        <!-- <li class="slide"> <img src="../image/content/8.jpg" alt=""> </li> -->
+        <!-- <li class="slide"> <img src="../image/content/9.jpg" alt=""> </li>
+        <li class="slide"> <img src="../image/content/10.jpg" alt=""> </li> -->
       </ul>
     </div>
-      <div class="view top-gap"><span>Area:</span><span>11111111</span></div>
-      <div class="view top-gap"><span>Area:</span><span>11111111</span></div>
-      <div class="view top-gap"><span>Area:</span><span>11111111</span></div>
-      <div class="view top-gap"> 
-         <span>Description:</span><span>111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111</span></div> 
+      <div class="view top-gap"><span>登録時間:</span><span id="f-createdtime"></span></div>
+      <div class="view top-gap"><span>カテゴリ:</span><span id="f-category"></span></div>
+      <!-- <div class="view top-gap"><span>Area:</span><span>11111111</span></div> -->
+      <div class="view top-gap">
+         <span>説明:</span><span id="f-description"></span></div>
       <div class="login">
-      <input type="button" value="Reservation" class="login-button"/>
+      <input id="btn-reserve" type="button" value="予約" onclick="javascript:doReserve()" class="login-button top-gap"/>
     </div>
-      <div class="bottom">&nbsp;</div>
+
+    <!-- <br/>
+    <h1>予約リスト</h1>
+      <div class="list dotted">
+        <div class="list-left"><img src="../image/goods/648054_1296624260ZG3z.jpg.big.jpg" class="picture"/></div>
+        <div class="list-right">
+          <div class="description">
+            <ul>
+              <li>Item1</li>
+              <li>Item2</li>
+              <li>Item3</li>
+              <li>Item4</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="list dotted">
+        <div class="list-left"><img src="../image/goods/648054_1296624263c4O3.jpg.big.jpg" class="picture"/></div>
+        <div class="list-right">
+          <div class="description">
+            <ul>
+              <li>Item1</li>
+              <li>Item2</li>
+              <li>Item3</li>
+              <li>Item4</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="list line">
+        <div class="list-left"><img src="../image/goods/648054_1296624263Hua0.jpg.big.jpg" class="picture"/></div>
+        <div class="list-right">
+          <div class="description">
+            <ul>
+              <li>Item1</li>
+              <li>Item2</li>
+              <li>Item3</li>
+              <li>Item4</li>
+            </ul>
+          </div>
+        </div>
+      </div> -->
+      <div class="bottom-gap">&nbsp;</div>
     </div>
     <div class="main-right">&nbsp;</div>
   </div>
 </div>
 <div id="nav" class="nav">
-	<h3>Account Manage</h3>	
+	<h3 id="f-username">Account Manage</h3>
     <div id="scrollerBox" class="scrollerBox">
         <div class="scroller">
             <ul>
-                <li><a href="#">zhuiyue</a></li>
-                <li><a href="#">pingsha</a></li>
-                <li><a href="#">yizhishi</a></li>
-                <li><a href="#">...</a></li>
+              <li><a href="#">アカウント管理</a></li>
+              <li><a href="#">予約管理</a></li>
+              <li><a href="#">登録した不用品管理</a></li>
+              <li><a href="#">ログアウト</a></li>
             </ul>
         </div>
     </div>

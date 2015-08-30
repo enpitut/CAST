@@ -9,106 +9,160 @@
 　<script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
 <![endif]-->
 
-<link rel="stylesheet" type="text/css" href="../css/side.css"/>
+<link rel="stylesheet" type="text/css" href="../css/top.css"/>
 <script type="text/javascript" src="../js/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="../js/ajax-calls.js"></script>
+<script type="text/javascript">
+  $(document).ready(function(){
+    refreshGoodsList('','');
+    fetchUserInfo();
+  });
+
+  function fetchUserInfo(){
+    getUserInfo('',function(res){
+      var jsonArr = $.parseJSON(res);
+
+      if($.isArray(jsonArr) && jsonArr.length > 0){
+        var userJObj = jsonArr[0];
+        $('#f-username').text(jsonArr[0].username);
+      }
+    });
+  }
+
+  function refreshGoodsList(keyword, category){
+    var jsonData = {"keyword":keyword, "category":category};
+
+    getGoodsList(jsonData, function(res){
+      var jsonArr = $.parseJSON(res);
+
+      if($.isArray(jsonArr)){
+        for(var i = 0; i < jsonArr.length; i++){
+          var pPath = '../image/goods/648054_1296624260ZG3z.jpg.big.jpg';
+          var detailPath = 'goodsView.html?goodsID=' + jsonArr[i].uid;
+
+          if(jsonArr[i].photos != ''){
+            var photos = $.parseJSON(jsonArr[i].photos);
+
+            if($.isArray(photos) && photos.length > 0){
+              pPath = photos[0];
+            }
+          }
+
+          var css_line = 'dotted';
+          if(i == jsonArr.length - 1){
+            css_line = 'line';
+          }
+
+          var itemHtml = '<a style="display:block; cursor:pointer;" href="' + detailPath + '">'
+                    + '<div class="list ' + css_line + '">'
+                    + '<div class="list-left"><img src="' + pPath + '" class="picture"/></div>'
+                    + '<div class="list-right">'
+                    + '<div class="description">'
+                    + '<ul>'
+                    + '<li>' + jsonArr[i].title + '</li>'
+                    + '<li>' + jsonArr[i].createdTime + '</li>'
+                    + '<li>カテゴリ: ' + jsonArr[i].category + '</li>'
+                    + '<li><p>' + jsonArr[i].description + '<p></li>'
+                    + '</ul>'
+                    + '</div>'
+                    + '</div>'
+                    + '</div></a>';
+
+                    $('#goods-list').append(itemHtml);
+        }
+      }
+    });
+  }
+
+
+</script>
+
+
 </head>
 
 <body>
-<div id="rightNav-over"></div>
-<div id="right" class="rightWarmp">
-  <div id="left" class="leftWarmp">
-    <div class="header">
-      	<div class="ico-home leftSlide"><span>&nbsp;</span></div>
-        <div id="title"><a href="#" class="logo">&nbsp;</a></div>
-        <div class="ico-nav rightSlide">&nbsp;</div>
-      </div>
-	<div class="main">
+<div id="nav-over"></div>
+<div id="bottomNav-over"></div>
+<div id="warmp" class="warmp">
+  <div class="top">
+  	<div class="top-left"><a href="register.html" class="signin">&nbsp;</a></div>
+    <div class="top-middle"><a href="#" class="logo">&nbsp;</a></div>
+    <div class="account">&nbsp;</div>
+  </div>
+  <div class="main">
   	<div class="main-left">&nbsp;</div>
     <div class="main-middle">
-      <h1>Grouop Name</h1>
-      <div class="list dotted">
-        <div class="list-left"><img src="../image/goods/648054_1296624260ZG3z.jpg.big.jpg" class="picture"/></div>
-        <div class="list-right">
-          <div class="description">
-            <ul>
-              <li>Item1</li>
-              <li>Item2</li>
-              <li>Item3</li>
-              <li>Item4</li>
-            </ul>
+      <div class="login top-gap">
+      <input type="button" value="不用品登録" class="login-button" onclick="javascript:window.location='goodsadd.html'"/>
+    </div>
+      <!-- <h1>Group Name</h1> -->
+      <div id="goods-list">
+        <!-- <div class="list dotted">
+          <div class="list-left"><img src="../image/goods/648054_1296624263c4O3.jpg.big.jpg" class="picture"/></div>
+          <div class="list-right">
+            <div class="description">
+              <ul>
+                <li>Item1</li>
+                <li>Item2</li>
+                <li>Item3</li>
+                <li>Item4</li>
+              </ul>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="list dotted">
-        <div class="list-left"><img src="../image/goods/648054_1296624263c4O3.jpg.big.jpg" class="picture"/></div>
-        <div class="list-right">
-          <div class="description">
-            <ul>
-              <li>Item1</li>
-              <li>Item2</li>
-              <li>Item3</li>
-              <li>Item4</li>
-            </ul>
+        </div> -->
+        <!-- <div class="list line">
+          <div class="list-left"><img src="../image/goods/648054_1296624263Hua0.jpg.big.jpg" class="picture"/></div>
+          <div class="list-right">
+            <div class="description">
+              <ul>
+                <li>Item1</li>
+                <li>Item2</li>
+                <li>Item3</li>
+                <li>Item4</li>
+              </ul>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="list line">
-        <div class="list-left"><img src="../image/goods/648054_1296624263Hua0.jpg.big.jpg" class="picture"/></div>
-        <div class="list-right">
-          <div class="description">
-            <ul>
-              <li>Item1</li>
-              <li>Item2</li>
-              <li>Item3</li>
-              <li>Item4</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="search">
-        <div class="key"><input type="search" class="word"/></div>
-        <div class="goto"><input type="button" class="go"/></div>
+        </div> -->
       </div>
       <div class="big-gap">&nbsp;</div>
     </div>
     <div class="main-right">&nbsp;</div>
   </div>
-  </div>
+  <div class="bottom">
+        <div class="search">
+            <div class="key"><input type="search" class="word"/></div>
+            <div class="goto"><input type="button" class="go"/></div>
+        </div>
+        <div class="category">&nbsp;</div>
+      </div>
 </div>
-<div id="left-nav" class="left-nav">
-  <div id="leftBox" class="scrollerBox">
-    <div class="scroller">
-  	 <h3><a href="#">种类</a></h3>
-     <div>
-      <ul>
-        <li><a href="#">家具</a></li>
-        <li><a href="#">电器</a></li>
-        <li><a href="#">本</a></li>
-        <li><a href="#">杂志</a></li>
-        <li><a href="#">车</a></li>
-        <li class="c"></li>
-      </ul>
-     </div>
-     
+<div id="nav" class="nav">
+	<h3 id="f-username">Account Manage</h3>
+    <div id="scrollerBox" class="scrollerBox">
+        <div class="scroller">
+            <ul>
+                <li><a href="#">アカウント管理</a></li>
+                <li><a href="#">予約管理</a></li>
+                <li><a href="#">登録した不用品管理</a></li>
+                <li><a href="#">ログアウト</a></li>
+            </ul>
+        </div>
     </div>
-  </div>
 </div>
-<div id="right-nav" class="right-nav">
-  <div id="rightBox" class="scrollerBox">
-    <div class="scroller">
-  	 <h3><a href="#">Account Manage</a></h3>
-     <div>
-      <ul>
-        <li><a href="#">buyongpin</a></li>
-        <li><a href="#">yuyue</a></li>
-        <li><a href="#">denglu</a></li>
-        <li><a href="#">logout</a></li>
-        <li class="c"></li>
-      </ul>
-     </div>
+<div id="bottomNav" class="nav">
+	<h3>カテゴリ</h3>
+    <div id="bottomBox" class="scrollerBox">
+        <div class="scroller">
+            <ul>
+                <li><a href="#">家具</a></li>
+                <li><a href="#">家電</a></li>
+                <li><a href="#">デジタル</a></li>
+                <li><a href="#">本、雑誌</a></li>
+                <li><a href="#">車</a></li>
+            </ul>
+        </div>
     </div>
-  </div>
 </div>
-<script src="../js/side.js" type="text/jscript"></script>
+<script src="../js/top.js" type="text/jscript"></script>
 </body>
 </html>

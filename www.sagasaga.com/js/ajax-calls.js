@@ -179,7 +179,7 @@ function init_upload(formID, callback){
           var progress = parseInt(data.loaded / data.total * 100, 10);
 
           if(progress == 100){
-            path = "upload/" + data.files[0].name;
+            path = "../upload/" + data.files[0].name;
             if (callback) callback(path);
           }
       },

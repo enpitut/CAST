@@ -1,8 +1,6 @@
 <?php
+session_start();
 
-// This is a API, for user register
-// chou
-// 2015/8/26
 include('../DBBaseTable.php');
 
 $array = array();
@@ -20,6 +18,9 @@ if(isset($_POST['sex'])){
 }
 if(isset($_POST['address'])){
 	$array['address'] = $_POST['address'];
+}
+if(isset($_POST['avatar'])){
+	$array['avatar'] = $_POST['avatar'];
 }
 
 if(count($array) > 0){

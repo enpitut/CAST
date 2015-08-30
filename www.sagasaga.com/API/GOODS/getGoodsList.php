@@ -2,19 +2,19 @@
 include('../DBBaseTable.php');
 
 $keyword = '';
-$catalog = '';
+$category = '';
 
 if(isset($_POST['keyword'])){
 	$keyword = $_POST['keyword'];
 }
 
-if(isset($_POST['catalog'])){
-	$catalog = $_POST['catalog'];
+if(isset($_POST['category'])){
+	$category = $_POST['category'];
 }
 
-if(strlen($keyword) > 0 && strlen($catalog) > 0){
+if(strlen($keyword) > 0 && strlen($category) > 0){
 	$t = new DBBaseTable("goods");
-  $where = "title LIKE " . "'%" . $keyword . "%' AND catalog = '" . $catalog . "'";
+  $where = "title LIKE " . "'%" . $keyword . "%' AND category = '" . $category . "'";
   $result = $t->query_by_where($where);
   echo json_encode($result);
 	exit;
@@ -26,9 +26,9 @@ elseif (strlen($keyword) > 0){
   echo json_encode($result);
 	exit;
 }
-elseif (strlen($catalog) > 0) {
+elseif (strlen($category) > 0) {
 	$t = new DBBaseTable("goods");
-  $result = $t->query_by_field("catalog",$catalog);
+  $result = $t->query_by_field("category",$category);
   echo json_encode($result);
 	exit;
 }

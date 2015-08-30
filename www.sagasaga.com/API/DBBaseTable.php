@@ -7,7 +7,6 @@ define("DBNAME", "sagasaga");
 
 class DBBaseTable{
  var $table_name = '';
-
  public $orderBy = '';
 
 public function __construct($table) {

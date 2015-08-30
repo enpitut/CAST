@@ -1,7 +1,5 @@
 <?php
-//get User Info BY uid
-//created by Chou
-//2015/8/27
+session_start();
 
 include('../DBBaseTable.php');
 
@@ -13,6 +11,11 @@ if(isset($_POST['userID'])){
 if(strlen($userID) == 0 && isset($_SESSION['CURRENT_USER_ID'])){
   $userID = $_SESSION['CURRENT_USER_ID'];
 }
+// else{
+// 	if not signed in, redirect to login.html
+// 	header("Location: ../../index/login.html"); /* Redirect browser */
+// 	exit();
+// }
 
 if(strlen($userID) > 0){
   $t = new DBBaseTable("user");

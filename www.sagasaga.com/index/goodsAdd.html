@@ -6,10 +6,77 @@
 <title>Goods Login</title>
 <link rel="stylesheet" type="text/css" href="../css/common.css"/>
 <!--[if lt IE 9]>
-　<script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+<script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
 <![endif]-->
 <link rel="stylesheet" type="text/css" href="../css/top.css"/>
 <script type="text/javascript" src="../js/jquery-1.11.0.min.js"></script>
+<!-- jQuery File Upload Dependencies -->
+<script src="../js/jquery.ui.widget.js"></script>
+<script src="../js/jquery.fileupload.js"></script>
+<script type="text/javascript" src="../js/ajax-calls.js"></script>
+<script type="text/javascript">
+  $(document).ready(function(){
+    fetchUserInfo();
+
+    var jPhotos = $.parseJSON('[]');
+
+    $('#btn-submit').click(function (evt) {
+      evt.preventDefault();
+
+      var jsonData = {
+                      "title":$('#f-title').val(),
+                      "category":$('#f-category').val(),
+                      "address":$('#f-area').val(),
+                      "description":$('.detail').val(),
+                      "photos":JSON.stringify(jPhotos)};
+
+      newGoods(jsonData, function(res){
+        var jsonObj = $.parseJSON(res);
+        if('success' == jsonObj.status){
+          alert('不用品登録しました');
+          window.location.href = "main.html";
+        }
+        else{
+            alert("something wrong");
+        }
+      });
+    });
+
+    /* pass form id and handle callbacks which return photo path */
+    init_upload('upload', function(path){
+      // alert(path);
+      jPhotos.push(path);
+
+      var tpl = '<li><img alt="" src="' + path + '" /></li>';
+      $('#display-box ul').append(tpl);
+    });
+  });
+
+  function fetchUserInfo(){
+    getUserInfo('',function(res){
+      var jsonArr = $.parseJSON(res);
+
+      if($.isArray(jsonArr) && jsonArr.length > 0){
+        var userJObj = jsonArr[0];
+        $('#f-username').text(jsonArr[0].username);
+      }
+    });
+  }
+</script>
+<style>
+#display-box {
+	width: 100%;
+}
+#display-box ul li {
+	width:100%;
+	height: 100%;
+	text-align:center;
+}
+#display-box ul li img {
+	max-height: 9em;
+	width: auto;
+}
+</style>
 </head>
 
 <body>
@@ -21,52 +88,78 @@
     <div class="account">&nbsp;</div>
   </div>
   <div class="main">
-  <div class="main-left">&nbsp;</div>
-  <div class="main-middle">
-    <h1>Add Goods</h1> 
-  	<form action="" method="post">
-        <div class="sign"> 
-          <div class="sign-left"><span>Image:</span></div>
-          <div class="sign-right"><input type="file" class="file"/></div>    
+    <div class="main-left">&nbsp;</div>
+    <div class="main-middle">
+      <h1>不用品登録</h1>
+      <!-- PLACE TO DISPLAY UPLOADED PHOTOS -->
+      <div id="display-box">
+        <ul>
+        </ul>
+      </div>
+      <div class="sign">
+        <div class="sign-left"><span>画像:</span></div>
+        <div class="sign-right">
+          <form id="upload" method="post" action="../api/upload.php" enctype="multipart/form-data">
+            <!-- <input style="display:none" type="file" name="upl" multiple /> -->
+            <input type="file" name="upl" class="file" multiple/>
+          </form>
         </div>
-        <div class="sign"> 
-          <div class="sign-left"><span>Category:</span></div>
-          <div class="sign-right"><select class="chose">
-        <option value="" style="display:none" disabled selected>Please chose your position</option>
-        <option value="hirasuna">平砂</option>
-        <option value="oikosi">追越</option>
-        <option value="itinoya">一ノ矢</option>
-      </select></div>  
+        <div class="c"></div>
+      </div>
+
+      <div class="login">
+        <div class="login-left"><span>タイトル:</span></div>
+        <div class="login-right">
+          <input id="f-title" type="text" class="login-text"/>
         </div>
-        <div class="sign"> 
-          <div class="sign-left"><span>Area:</span></div>
-          <div class="sign-right"><select class="chose">
-        <option value="" style="display:none" disabled selected>Gender</option>
-        <option value="male">Male</option>
-        <option value="female">Female</option>
-      </select></div>  
+        <div class="c"></div>
+      </div>
+      <div class="sign">
+        <div class="sign-left"><span>カテゴリ:</span></div>
+        <div class="sign-right">
+          <select id="f-category" class="chose">
+            <option value="" style="display:none" disabled selected>カテゴリを選んでください</option>
+            <option value="家具">家具</option>
+        <option value="家電">家電</option>
+        <option value="本">本</option>
+        <option value="雑誌">雑誌</option>
+        <option value="車">車</option>
+          </select>
         </div>
-        <div class="sign"> 
-          <textarea class="detail" value="请输入关键词" onfocus="if(value=='请输入关键词'){value=''}" onblur="if (value=='') {value='请输入关键词'}">请输入关键词</textarea>
+        <div class="c"></div>
+      </div>
+      <div class="sign">
+        <div class="sign-left"><span>エリア:</span></div>
+        <div class="sign-right">
+          <select id="f-area" class="chose">
+            <option value="" style="display:none" disabled selected>エリアを選んでください</option>
+            <option value="平砂">平砂</option>
+        <option value="追越">追越</option>
+        <option value="一ノ矢">一ノ矢</option>
+          </select>
         </div>
-        <div class="login top-gap">
-          <input type="submit" value="Submit" class="login-button"/>
+        <div class="c"></div>
+      </div>
+      <div class="sign">
+          <textarea class="detail" value="商品の説明を入力してください" onfocus="if(value=='商品の説明を入力してください'){value=''}" onblur="if (value=='') {value='商品の説明を入力してください'}">商品の説明を入力してください</textarea>
         </div>
-    </form>
-    <div class="bottom">&nbsp;</div>
+      <div class="login top-gap">
+        <input id="btn-submit" type="submit" value="登録" class="login-button"/>
+      </div>
+      <div class="bottom-gap">&nbsp;</div>
+    </div>
+    <div class="main-right">&nbsp;</div>
   </div>
-  <div class="main-right">&nbsp;</div>
-</div>
 </div>
 <div id="nav" class="nav">
-	<h3>Account Manage</h3>	
+  <h3 id="f-username">Account Manage</h3>
     <div id="scrollerBox" class="scrollerBox">
         <div class="scroller">
             <ul>
-                <li><a href="#">zhuiyue</a></li>
-                <li><a href="#">pingsha</a></li>
-                <li><a href="#">yizhishi</a></li>
-                <li><a href="#">...</a></li>
+                <li><a href="#">アカウント管理</a></li>
+                <li><a href="#">予約管理</a></li>
+                <li><a href="#">登録した不用品管理</a></li>
+                <li><a href="#">ログアウト</a></li>
             </ul>
         </div>
     </div>

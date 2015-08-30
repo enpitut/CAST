@@ -10,10 +10,16 @@
 <![endif]-->
 <link rel="stylesheet" type="text/css" href="../css/top.css"/>
 <script type="text/javascript" src="../js/jquery-1.11.0.min.js"></script>
+<!-- jQuery File Upload Dependencies -->
+<script src="../js/jquery.ui.widget.js"></script>
+<script src="../js/jquery.fileupload.js"></script>
+
 <script type="text/javascript" src="../js/ajax-calls.js"></script>
 <script type="text/javascript">
   $(document).ready(function(){
-    $('#form-register').submit(function (evt) {
+    var userAvatar = '';
+
+    $('#btn-submit').click(function (evt) {
       evt.preventDefault();
 
       var msg = checkForm();
@@ -25,9 +31,10 @@
                         "password":$('#f-password').val(),
                         "email":$('#f-email').val(),
                         "address":$('#f-area').val(),
-                        "sex":$('#f-gender').val()};
-        register(jsonData, function(res){
+                        "sex":$('#f-gender').val(),
+                        "avatar":userAvatar};
 
+        register(jsonData, function(res){
           var jsonObj = $.parseJSON(res);
           if('success' == jsonObj.status){
             window.location.href = "main.html";
@@ -38,6 +45,16 @@
         });
       }
     });
+
+    /* pass form id and handle callbacks which return photo path */
+    init_upload('upload', function(path){
+      // alert(path);
+      userAvatar = path;
+
+      var tpl = '<li><img alt="" src="' + path + '" /></li>';
+      $('#display-box ul').append(tpl);
+    });
+
   });
 
   function checkForm(){
@@ -52,18 +69,30 @@
     else if($('#f-email').val() == ''){
       msg = 'emailを入力してください';
     }
-    else if($('#f-area').val() == ''){
-      msg = 'areaを入力してください';
-    }
-    else if($('#f-gender').val() == ''){
-      msg = 'genderを入力してください';
-    }
+    // else if($('#f-area').val().length == 0){
+    //   msg = 'areaを入力してください';
+    // }
+    // else if($('#f-gender').val().length == 0){
+    //   msg = 'genderを入力してください';
+    // }
 
     return msg;
   }
-
-
 </script>
+<style>
+#display-box {
+	width: 100%;
+}
+#display-box ul li {
+	width:100%;
+	height: 100%;
+	text-align:center;
+}
+#display-box ul li img {
+	max-height: 13em;
+	width: auto;
+}
+</style>
 </head>
 
 <body>
@@ -75,39 +104,45 @@
 <div class="main">
   <div class="main-left">&nbsp;</div>
   <div class="main-middle">
-    <h1>Sign</h1>
-  	<form id="form-register">
+    <h1>新規登録</h1>
+  	<div>
+    <!-- PLACE TO DISPLAY UPLOADED PHOTOS -->
+      	<div id="display-box"><ul></ul></div>
         <div class="sign">
-          <div class="sign-left"><span>Image:</span></div>
-          <div class="sign-right"><input type="file" class="file"/></div>
+          <div class="sign-left"><span>画像:</span></div>
+          <form id="upload" method="post" action="../api/upload.php" enctype="multipart/form-data">
+      			<!-- <input style="display:none" type="file" name="upl" multiple /> -->
+            <div class="sign-right"><input type="file" name="upl" class="file"/></div>
+      		</form>
+
         </div>
         <div class="login">
-          <div class="login-left"><span>Username:</span></div>
+          <div class="login-left"><span>ユーザーネーム:</span></div>
           <div class="login-right"><input id="f-username" type="text" class="login-text"/></div>
         </div>
         <div class="login">
-          <div class="login-left"><span>Password:</span></div>
+          <div class="login-left"><span>パスワード:</span></div>
           <div class="login-right"><input id="f-password" type="text" class="login-text"/></div>
         </div>
         <div class="login">
-          <div class="login-left"><span>Email:</span></div>
+          <div class="login-left"><span>メールアドレス:</span></div>
           <div class="login-right"><input id="f-email" type="text" class="login-text"/></div>
         </div>
         <div class="sign">
-          <div class="sign-left"><span>Area:</span></div>
+          <div class="sign-left"><span>エリア:</span></div>
           <div class="sign-right"><select id="f-area" class="chose">
-        <option value="" style="display:none" disabled selected>Please chose your position</option>
-        <option value="hirasuna">平砂</option>
-        <option value="oikosi">追越</option>
-        <option value="itinoya">一ノ矢</option>
+        <option value="" style="display:none" disabled selected>エリアを選んでください</option>
+        <option value="平砂">平砂</option>
+        <option value="追越">追越</option>
+        <option value="一ノ矢">一ノ矢</option>
       </select></div>
         </div>
         <div class="sign">
-          <div class="sign-left"><span>Gender:</span></div>
+          <div class="sign-left"><span>性別:</span></div>
           <div class="sign-right"><select id="f-gender" class="chose">
-        <option value="" style="display:none" disabled selected>Gender</option>
-        <option value="male">Male</option>
-        <option value="female">Female</option>
+        <option value="" style="display:none" disabled selected>性別を選んでください</option>
+        <option value="男性">男性</option>
+        <option value="女性">女性</option>
       </select></div>
         </div>
         <!-- <div class="login">
@@ -115,10 +150,10 @@
           <div class="login-right"><input id="f-repassword" type="password" class="login-text"/></div>
         </div> -->
         <div class="login">
-          <input type="submit" value="Submit" class="login-button"/>
+          <input id="btn-submit" type="submit" value="登録" class="login-button"/>
         </div>
-    </form>
-    <div class="bottom">&nbsp;</div>
+    </div>
+    <div class="bottom-gap">&nbsp;</div>
   </div>
   <div class="main-right">&nbsp;</div>
 </div>

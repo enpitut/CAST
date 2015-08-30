@@ -1,4 +1,4 @@
 <?php
-header("Location: index/main.html"); /* Redirect browser */
+header("Location: index/login.html"); /* Redirect browser */
 exit();
  ?>
