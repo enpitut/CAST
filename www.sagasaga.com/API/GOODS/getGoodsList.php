@@ -12,7 +12,14 @@ if(isset($_POST['catalog'])){
 	$catalog = $_POST['catalog'];
 }
 
-if(strlen($keyword) > 0){
+if(strlen($keyword) > 0 && strlen($catalog) > 0){
+	$t = new DBBaseTable("goods");
+  $where = "title LIKE " . "'%" . $keyword . "%' AND catalog = '" . $catalog . "'";
+  $result = $t->query_by_where($where);
+  echo json_encode($result);
+	exit;
+}
+elseif (strlen($keyword) > 0){
 	$t = new DBBaseTable("goods");
   $where = "title LIKE " . "'%" . $keyword . "%'";
   $result = $t->query_by_where($where);

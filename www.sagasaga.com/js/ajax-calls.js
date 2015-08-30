@@ -4,7 +4,7 @@ function test(){
 
 function register(jsonData, callback){
       $.ajax({
-        url: 'api/user/register.php',
+        url: '../api/user/register.php',
         type: "POST",
         data: jsonData,
         error: function() {
@@ -18,7 +18,7 @@ function register(jsonData, callback){
 
 function login(jsonData, callback){
   $.ajax({
-    url: 'api/user/login.php',
+    url: '../api/user/login.php',
     type: "POST",
     data: jsonData,
     error: function() {
@@ -32,7 +32,7 @@ function login(jsonData, callback){
 
 function getUserInfo(jsonData, callback){
   $.ajax({
-    url: 'api/user/getUserInfo.php',
+    url: '../api/user/getUserInfo.php',
     type: "POST",
     data: jsonData,
     error: function() {
@@ -46,7 +46,7 @@ function getUserInfo(jsonData, callback){
 
 function updateUserInfo(jsonData, callback){
   $.ajax({
-    url: 'api/user/userUpdate.php',
+    url: '../api/user/userUpdate.php',
     type: "POST",
     data: jsonData,
     error: function() {
@@ -60,7 +60,7 @@ function updateUserInfo(jsonData, callback){
 
 function newGoods(jsonData, callback){
   $.ajax({
-    url: 'api/goods/newGoods.php',
+    url: '../api/goods/newGoods.php',
     type: "POST",
     data: jsonData,
     error: function() {
@@ -74,7 +74,7 @@ function newGoods(jsonData, callback){
 
 function getGoodsInfo(jsonData, callback){
   $.ajax({
-    url: 'api/goods/getGoodsInfo.php',
+    url: '../api/goods/getGoodsInfo.php',
     type: "POST",
     data: jsonData,
     error: function() {
@@ -88,7 +88,7 @@ function getGoodsInfo(jsonData, callback){
 
 function getGoodsList(jsonData, callback){
   $.ajax({
-    url: 'api/goods/getGoodsList.php',
+    url: '../api/goods/getGoodsList.php',
     type: "POST",
     data: jsonData,
     error: function() {
@@ -102,7 +102,7 @@ function getGoodsList(jsonData, callback){
 
 function getMyGoodsListCreated(callback){
   $.ajax({
-    url: 'api/goods/getMyGoodsListCreated.php',
+    url: '../api/goods/getMyGoodsListCreated.php',
     type: "POST",
     error: function() {
                 //  alert('failure');
@@ -115,7 +115,7 @@ function getMyGoodsListCreated(callback){
 
 function getMyGoodsListReserved(callback){
   $.ajax({
-    url: 'api/goods/getMyGoodsListReserved.php',
+    url: '../api/goods/getMyGoodsListReserved.php',
     type: "POST",
     error: function() {
                   //  alert('failure');
@@ -128,7 +128,7 @@ function getMyGoodsListReserved(callback){
 
 function newReserve(jsonData, callback){
   $.ajax({
-    url: 'api/reserve/newReserve.php',
+    url: '../api/reserve/newReserve.php',
     type: "POST",
     data: jsonData,
     error: function() {
@@ -142,7 +142,7 @@ function newReserve(jsonData, callback){
 
 function getReserveList(jsonData, callback){
   $.ajax({
-    url: 'api/reserve/getReserveList.php',
+    url: '../api/reserve/getReserveList.php',
     type: "POST",
     data: jsonData,
     error: function() {
@@ -156,7 +156,7 @@ function getReserveList(jsonData, callback){
 
 function getReserveSum(jsonData, callback){
   $.ajax({
-    url: 'api/reserve/getReserveSum.php',
+    url: '../api/reserve/getReserveSum.php',
     type: "POST",
     data: jsonData,
     error: function() {

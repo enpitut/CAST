@@ -1,0 +1,311 @@
+@charset "utf-8";
+/* CSS Document */
+body, ul, ol, li, dl, dt, dd, p, h1, h2, h3, h4, h5, h6, form, fieldset, table, td, img, div {
+	margin:0;
+	padding:0;
+	border:0;
+	font-family:"ヒラギノ角ゴ Pro W3","メイリオ","Hiragino Kaku Gothic Pro", "ＭＳ Ｐゴシック","MS PGothic", Arial,sans-serif,Meiryo, Osaka;  
+}
+h1, h2, h3, h4, h5, h6 {
+	font-size:1em;
+	font-weight:normal;
+}
+li {
+	list-style:none;
+}
+
+a {
+	color: #000;
+	text-decoration:none;
+}
+a:hover {
+	text-decoration:none;
+	color:#f60;
+}
+
+img, object{
+	border: 0;
+	max-width: 100%;
+	width:100%;/*适用老版IE*/
+	-ms-interpolation-mode: bicubic;/*防止图片失真*/
+}
+
+small {
+　　　　font-size: 0.875em;
+}
+
+.left{
+	float:left;
+}
+.right{
+	float:right;
+}
+.c {
+	clear:both;
+	font-size:0px;
+}
+
+/*-------------------------reservation--------------------------*/
+.main{
+	width:100%;
+	height:100%;
+}
+.main-left{
+	float:left;
+	width:10%;
+	height:100%;
+}
+.main-middle{
+	float:left;
+	width:78%;
+	margin:0 1%;
+	height:100%;
+}
+h1{
+	font-size:1.5em;
+	width:100%;
+	height:2em;
+	line-height:2em;
+	text-align:center;
+}
+.list{
+	width:100%;
+	height:9em;
+	padding:0.3em 0 0.7em 0;
+}
+.dotted{
+	background:url(../image/line.png) center bottom no-repeat;
+}
+.line{
+	background:url(../image/topbg.png) center bottom no-repeat;
+}
+.list-left{
+	float:left;
+	height:9em;
+	width:30%;
+	text-align:right;
+}
+.picture{
+	max-width:100%;
+	max-height:9em;
+	height:auto;
+	width:auto;
+}
+.list-right{
+	float:left;
+	width:69%;
+	margin-left:1%;
+	height:9em;
+}
+.description{
+	width:100%;
+	height:100%;
+}
+.description ul li{
+	line-height:1.5em;
+	font-size:1em;
+	text-align:left;
+	color:#000;
+}
+.main-right{
+	float:left;
+	width:10%;
+	height:100%;
+}
+
+.bottom{
+	height:1em;
+}
+/*---------------------------login---------------------------*/
+.login{
+	width:100%;
+	text-align:center;
+}
+.login-left{
+	float:left;
+	width:34%;
+	margin-right:1%;
+	font-size:1em;
+	text-align:right;
+	height:4em;
+	line-height:4em;
+}
+.login-right{
+	float:left;
+	width:40%;
+	text-align:left;
+	height:4em;
+	background:url(../image/text.png) left center no-repeat;
+ 	-moz-background-size:90% 70%;
+    -webkit-background-size:90% 70%;
+    -o-background-size:90% 70%;
+    background-size:90% 70%;
+}
+.login-right:hover{
+	background:url(../image/texth.png) left center no-repeat;
+	-moz-background-size:90% 70%;
+    -webkit-background-size:90% 70%;
+    -o-background-size:90% 70%;
+    background-size:90% 70%;
+}
+.login-text{
+	border:none;
+	width:85%;
+	height:2em;
+	margin:1em 0 0 2%;
+	padding-left:1%;
+	font-size:1em;
+}
+.login-button{
+	background:url(../image/sign.png) center center no-repeat;
+	-moz-background-size:contain;
+    -webkit-background-size:contain;
+    -o-background-size:contain;
+    background-size:contain;
+	border:none;
+	cursor:pointer;
+	width:28%;
+	height:2.8em;
+	font-size:1em;
+}
+.login-button:hover{
+	background:url(../image/signh.png) center center no-repeat;
+	-moz-background-size:contain;
+    -webkit-background-size:contain;
+    -o-background-size:contain;
+    background-size:contain;
+	color:#e67122;
+}
+.top-gap{
+	margin-top:0.6em;
+}
+/*--------------------------sign--------------------------*/
+.sign{
+	width:100%;
+	text-align:center;
+}
+.sign-left{
+	float:left;
+	width:34%;
+	margin-right:1%;
+	font-size:1em;
+	text-align:right;
+	height:4em;
+	line-height:4em;
+}
+.sign-right{
+	float:left;
+	width:40%;
+	text-align:left;
+	height:4em;
+}
+.chose{
+	background:url(../image/select.png) center center no-repeat;
+	-moz-background-size:100% 100%;
+    -webkit-background-size:100% 100%;
+    -o-background-size:100% 100%;
+    background-size:100% 100%;
+	border:none;
+	width:85%;
+	padding-left:2%;
+	margin-top:0.5em;
+	font-size:1em;
+	height:3em;
+}
+.file{
+	line-height:2em;
+	margin-top:1.15em;
+	font-size:0.85em;
+}
+/*----------------------view------------------------*/
+.view{
+	width:84%;
+	margin:1em 8% 0 8%;
+	text-align:left;
+	font-size:1em;
+	line-height:2em;
+	word-break: break-all; 
+	word-wrap:break-word;
+}
+/*---------------------textarea------------------------*/
+.detail{
+	width:45%;
+	height:6em;
+	font-size:1em;
+	line-height:2em;
+}
+/*--------------------userPhoto-------------------*/
+.photo{
+	width:40%;
+	margin:0 auto;
+	height:13em;
+	text-align:center;
+}
+.pic{
+	max-width:100%;
+	max-height:100%;
+	width:auto;
+	height:auto;
+}
+/*---------------------search--------------------*/
+.big-gap{
+	height:4.5em;
+}
+.search{
+	background:url(../image/bottombg.png) center center no-repeat;
+	width:344px;
+	height:60px;
+	position:fixed;
+	bottom:0;
+	left:35%;
+	z-index:100;
+}
+.key{
+	float:left;
+	width:240px; 
+	height:40px;
+	margin:3% 2% 0 3%;
+	background:url(../image/search.png) center right no-repeat;
+	-moz-background-size:contain;
+    -webkit-background-size:contain;
+    -o-background-size:contain;
+    background-size:contain;
+}
+.key:hover{
+	background:url(../image/searchh.png) center right no-repeat;
+	-moz-background-size:contain;
+    -webkit-background-size:contain;
+    -o-background-size:contain;
+    background-size:contain;
+}
+.word{
+	width:230px;
+	height:28px;
+	border:none;
+	margin:5px 0 0 5px;
+}
+.goto{
+	float:left;
+	width:70px; 
+	height:40px;	
+	margin:3% 0 0 0;
+	background:url(../image/gobg.png) center left no-repeat;
+	-moz-background-size:contain;
+    -webkit-background-size:contain;
+    -o-background-size:contain;
+    background-size:contain;
+}
+.goto:hover{
+	background:url(../image/gobgh.png) center left no-repeat;
+	-moz-background-size:contain;
+    -webkit-background-size:contain;
+    -o-background-size:contain;
+    background-size:contain;
+}
+.go{
+	width:70px;
+	height:40px;
+	border:none;
+	cursor:pointer;
+	background:none;
+}

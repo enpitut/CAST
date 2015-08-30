@@ -4,41 +4,41 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Login</title>
-<link rel="stylesheet" type="text/css" href="../css/phone.css"/>
+<link rel="stylesheet" type="text/css" href="../css/common.css"/>
 <!--[if lt IE 9]>
 　<script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
 <![endif]-->
+<link rel="stylesheet" type="text/css" href="../css/top.css"/>
 </head>
 
 <body>
-
-<form action="API/User/login.php" method="post">
-
-<div class="main">
-  <div class="top">
-  	<a href="#" class="left">Back</a>
-    <span class="left forty">ログイン</span>
-    <div class="c"></div>
-  </div>
-  <div id="loginLogo" class="list">サガサガ</div>
-  <div>
-    <span class="left font">Username:</span>
-    <input type="text" class="left forty"/>
-    <div class="c"></div>
-  </div>
-  <div>
-    <span class="left font">Password:</span>
-    <input type="password" class="left forty"/>
-    <div class="c"></div>
-  </div>
-  <div>
-    <input type="button" value="サインイン"/>
-  </div>
-  <div>
-    <input type="button" value="今すぐ登録"/>
-  </div>
+<div class="top">
+  <div class="top-left"><a href="main.html" class="back">&nbsp;</a></div>
+  <div class="top-middle"><a href="#" class="logo">&nbsp;</a></div>
+  <div class="top-right">&nbsp;</div>
 </div>
-
-</form>
+<div class="main">
+  <div class="main-left">&nbsp;</div>
+  <div class="main-middle">
+    <h1>Login</h1>
+    <div class="login"> 
+      <div class="login-left"><span>Username:</span></div>
+      <div class="login-right"><input type="text" class="login-text"/></div>    
+    </div>
+    <div class="login"> 
+      <div class="login-left"><span>Password:</span></div>
+      <div class="login-right"><input type="password" class="login-text"/></div>  
+    </div>
+    <div class="login">
+      <input type="button" value="サインイン" class="login-button"/>
+    </div>
+    <div class="login top-gap">
+      <input type="button" value="今すぐ登録" class="login-button"/>
+    </div>
+    <div class="bottom">&nbsp;</div>
+  </div>
+  <div class="main-right">&nbsp;</div>
+</div>
+</div>
 </body>
 </html>

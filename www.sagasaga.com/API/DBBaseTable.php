@@ -6,7 +6,9 @@ define("PASSWORD", "");
 define("DBNAME", "sagasaga");
 
 class DBBaseTable{
- var $table_name;
+ var $table_name = '';
+
+ public $orderBy = '';
 
 public function __construct($table) {
 	$this->table_name = $table;
@@ -14,6 +16,14 @@ public function __construct($table) {
 
 public function query_by_nothing(){
 	$sql = "SELECT * FROM " . $this->table_name;
+
+  if(strlen($this->orderBy) > 0){
+    $sql = $sql . ' ORDER BY ' . $orderBy;
+  }
+  else{
+    $sql = $sql . ' ORDER BY createdTime DESC';
+  }
+
 	return $this->query($sql);
 }
 
@@ -24,11 +34,27 @@ public function query_by_id($id){
 
 public function query_by_field($field, $value){
 	$sql = "SELECT * FROM " . $this->table_name . " WHERE " . $field . " = '" . $value . "'";
+
+  if(strlen($this->orderBy) > 0){
+    $sql = $sql . ' ORDER BY ' . $orderBy;
+  }
+  else{
+    $sql = $sql . ' ORDER BY createdTime DESC';
+  }
+
 	return $this->query($sql);
 }
 
 public function query_by_where($where){
   $sql = "SELECT * FROM " . $this->table_name . " WHERE " . $where;
+
+  if(strlen($this->orderBy) > 0){
+    $sql = $sql . ' ORDER BY ' . $orderBy;
+  }
+  else{
+    $sql = $sql . ' ORDER BY createdTime DESC';
+  }
+
 	return $this->query($sql);
 }
 

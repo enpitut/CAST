@@ -4,52 +4,123 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Register</title>
-<link rel="stylesheet" type="text/css" href="../css/phone.css"/>
+<link rel="stylesheet" type="text/css" href="../css/common.css"/>
 <!--[if lt IE 9]>
 　<script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
 <![endif]-->
+<link rel="stylesheet" type="text/css" href="../css/top.css"/>
+<script type="text/javascript" src="../js/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="../js/ajax-calls.js"></script>
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('#form-register').submit(function (evt) {
+      evt.preventDefault();
+
+      var msg = checkForm();
+      if(msg.length > 0){
+        alert(msg);
+      }
+      else{
+        var jsonData = {"username":$('#f-username').val(),
+                        "password":$('#f-password').val(),
+                        "email":$('#f-email').val(),
+                        "address":$('#f-area').val(),
+                        "sex":$('#f-gender').val()};
+        register(jsonData, function(res){
+
+          var jsonObj = $.parseJSON(res);
+          if('success' == jsonObj.status){
+            window.location.href = "main.html";
+          }
+          else{
+              alert("something wrong");
+          }
+        });
+      }
+    });
+  });
+
+  function checkForm(){
+    var msg = '';
+
+    if($('#f-username').val() == ''){
+      msg = 'usernameを入力してください';
+    }
+    else if($('#f-password').val() == ''){
+      msg = 'passwordを入力してください';
+    }
+    else if($('#f-email').val() == ''){
+      msg = 'emailを入力してください';
+    }
+    else if($('#f-area').val() == ''){
+      msg = 'areaを入力してください';
+    }
+    else if($('#f-gender').val() == ''){
+      msg = 'genderを入力してください';
+    }
+
+    return msg;
+  }
+
+
+</script>
 </head>
 
 <body>
+<div class="top">
+  <div class="top-left"><a href="main.html" class="back">&nbsp;</a></div>
+  <div class="top-middle"><a href="#" class="logo">&nbsp;</a></div>
+  <div class="top-right">&nbsp;</div>
+</div>
 <div class="main">
-  <div class="top"> 
-  	<a href="#" class="left">detail</a> 
-    <span class="left text">サガサガ</span>
-    <div class="c"></div>
-  </div>
-  <form action="" method="post" class="list">
-    <div>Image:
-      <input type="file"/>
-    </div>
-    <div>Username:
-      <input type="text" name="name" id="name"/>
-    </div>
-    <div>Password:
-      <input type="text" name="name" id="password"/>
-    </div>
-    <div>Email:
-      <input type="email" name="email" id="email"/>
-    </div>
-    <div>Tel:
-      <input type="tel"/>
-    </div>
-    <div>
-      <select>
+  <div class="main-left">&nbsp;</div>
+  <div class="main-middle">
+    <h1>Sign</h1>
+  	<form id="form-register">
+        <div class="sign">
+          <div class="sign-left"><span>Image:</span></div>
+          <div class="sign-right"><input type="file" class="file"/></div>
+        </div>
+        <div class="login">
+          <div class="login-left"><span>Username:</span></div>
+          <div class="login-right"><input id="f-username" type="text" class="login-text"/></div>
+        </div>
+        <div class="login">
+          <div class="login-left"><span>Password:</span></div>
+          <div class="login-right"><input id="f-password" type="text" class="login-text"/></div>
+        </div>
+        <div class="login">
+          <div class="login-left"><span>Email:</span></div>
+          <div class="login-right"><input id="f-email" type="text" class="login-text"/></div>
+        </div>
+        <div class="sign">
+          <div class="sign-left"><span>Area:</span></div>
+          <div class="sign-right"><select id="f-area" class="chose">
         <option value="" style="display:none" disabled selected>Please chose your position</option>
         <option value="hirasuna">平砂</option>
         <option value="oikosi">追越</option>
         <option value="itinoya">一ノ矢</option>
-      </select>
-    </div>
-    <div>
-      <select>
+      </select></div>
+        </div>
+        <div class="sign">
+          <div class="sign-left"><span>Gender:</span></div>
+          <div class="sign-right"><select id="f-gender" class="chose">
         <option value="" style="display:none" disabled selected>Gender</option>
         <option value="male">Male</option>
         <option value="female">Female</option>
-      </select>
-    </div>
-    <div><input type="submit" value="Submit"/></div>
-  </form>
+      </select></div>
+        </div>
+        <!-- <div class="login">
+          <div class="login-left"><span>RePassword:</span></div>
+          <div class="login-right"><input id="f-repassword" type="password" class="login-text"/></div>
+        </div> -->
+        <div class="login">
+          <input type="submit" value="Submit" class="login-button"/>
+        </div>
+    </form>
+    <div class="bottom">&nbsp;</div>
+  </div>
+  <div class="main-right">&nbsp;</div>
 </div>
 </body>
 </html>

@@ -26,9 +26,10 @@ if(count($array) > 0){
 	$t_user = new DBBaseTable("user");
 
 	$userID = $t_user->insert_with_array($array);
-
 	if(strlen($userID) > 0){
-		/* Or Redirect To Another Page */
+		$_SESSION['CURRENT_USER_ID'] = $userID;
+		$_SESSION['CURRENT_USER'] = $_POST['username'];
+
 		echo '{"status":"success", "userID":"' . $userID . '"}';
 		exit;
 	}
